@@ -25,6 +25,8 @@
         "no-use-before-define": "off",
         "@typescript-eslint/no-use-before-define": ["error"],
         "react/jsx-filename-extension": "off", // Allow JSX in ts files
-        "react/function-component-definition": "off"
+        "react/function-component-definition": "off",
+        "@typescript-eslint/no-use-before-define": "off", // allow us to define style under component
+        "import/no-unresolved": "off"
     }
 }

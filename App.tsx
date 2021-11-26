@@ -6,10 +6,9 @@
  * @flow strict-local
  */
 
-import React from 'react';
-import type { Node } from 'react';
+import React, { FunctionComponent, ReactElement, ReactNode } from 'react';
 import {
-  SafeAreaView,ScrollView,
+  SafeAreaView, ScrollView,
   StatusBar,
   StyleSheet,
   Text,
@@ -25,9 +24,12 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-const Section = function ({ children, title }): Node {
+interface SectionProps {
+  title: string;
+}
+
+const Section: FunctionComponent<SectionProps> = function ({ children, title }): ReactElement {
   const isDarkMode = useColorScheme() === 'dark';
-  const var = 5;
   return (
     <View style={styles.sectionContainer}>
       <Text
@@ -54,7 +56,7 @@ const Section = function ({ children, title }): Node {
   );
 };
 
-const App: () => Node = function () {
+const App: () => ReactNode = function () {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
