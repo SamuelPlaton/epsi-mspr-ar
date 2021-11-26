@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, UseEffect } from 'react';
 import { View } from 'react-native';
 
 const BaseCard: FunctionComponent = ({ children }) => (
