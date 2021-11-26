@@ -5,12 +5,13 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "start": "react-native start",
+    "start": "expo start",
     "test": "jest",
     "lint": "eslint */**/*.{js,ts,tsx}",
     "lint:fix": "eslint */**/*.{js,ts,tsx} --fix"
   },
   "dependencies": {
+    "expo": "^43.0.3",
     "husky": "^7.0.4",
     "react": "17.0.2",
     "react-native": "0.66.3",
@@ -21,6 +22,8 @@
     "@babel/core": "^7.16.0",
     "@babel/runtime": "^7.16.3",
     "@react-native-community/eslint-config": "^3.0.1",
+    "@types/react": "~17.0.21",
+    "@types/react-native": "~0.64.12",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
     "babel-jest": "^27.3.1",

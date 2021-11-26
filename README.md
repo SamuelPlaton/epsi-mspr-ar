@@ -26,7 +26,7 @@ It's role is to :
 
 ### Launch the app
 
-Install dependencies : ```yarn install```  
-Run in Web Mode : ```pending```  
-Run in Android Mode [An emulator or a connected device must be recognized] :   
-```yarn run android```
+Install dependencies : ``yarn install``  
+Lint fix : ``yarn run lint:fix``  
+Run App : ``yarn run start``
+
