@@ -23,6 +23,8 @@
         "linebreak-style": "off", // Allow Windows and Mac LineBreaks
         // note you must disable the base rule as it can report incorrect errors
         "no-use-before-define": "off",
-        "@typescript-eslint/no-use-before-define": ["error"]
+        "@typescript-eslint/no-use-before-define": ["error"],
+        "react/jsx-filename-extension": "off", // Allow JSX in ts files
+        "react/function-component-definition": "off"
     }
 }
