@@ -6,9 +6,14 @@ import { useNavigation } from '@react-navigation/native';
 import { Images } from '../../../images';
 import { genericStyles } from '../../../styles';
 
+/**
+ * @name NavigationLayout
+ * @description Header of our app.
+ * @param children
+ * @constructor
+ */
 const NavigationLayout: FunctionComponent = ({ children }) => {
-  const nav = useNavigation();
-
+  // Our custom component style
   const styles = StyleSheet.create({
     header: {
       width: '100%',
@@ -26,9 +31,12 @@ const NavigationLayout: FunctionComponent = ({ children }) => {
     },
   });
 
+  const nav = useNavigation();
+  // Navigate user to a specified link
   const navigate = (link: string) => {
     nav.navigate(link);
   };
+
   return (
     <View>
       <View style={{ ...styles.header, ...genericStyles.rowBetween }}>

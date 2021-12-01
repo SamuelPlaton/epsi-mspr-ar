@@ -5,6 +5,11 @@ import { HomePage, InfoPage } from '../pages';
 
 const Stack = createNativeStackNavigator();
 
+/**
+ * @name Router
+ * @description Our React Native App Router.
+ * @constructor
+ */
 const Router: FunctionComponent = () => (
   <NavigationContainer>
     <Stack.Navigator initialRouteName="Home">

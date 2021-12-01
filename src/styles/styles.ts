@@ -1,5 +1,9 @@
 import { StyleSheet } from 'react-native';
 
+/**
+ * @name genericStyles
+ * @description Our reusable generic stylesheet.
+ */
 const genericStyles = StyleSheet.create({
   container: {
     flex: 1,
