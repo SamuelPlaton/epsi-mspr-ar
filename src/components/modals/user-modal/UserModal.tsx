@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useState } from 'react';
 import NetInfo from '@react-native-community/netinfo';
+import Constants from 'expo-constants';
 import { UserForm, Modal } from '../../../components';
 
 /**
@@ -9,10 +10,10 @@ import { UserForm, Modal } from '../../../components';
 const UserModal: FunctionComponent = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isFormSubmitted, setFormSubmitted] = useState<boolean>(false);
-
-  // Open modal only if wifi is accessible
+  const { enableUserRegistration } = Constants.manifest.extra;
+  // Open modal only if wifi is accessible and user registration is enabled
   NetInfo.addEventListener((networkState) => {
-    if (isOpen !== networkState.isConnected && !isFormSubmitted) {
+    if (isOpen !== networkState.isConnected && !isFormSubmitted && enableUserRegistration) {
       setIsOpen(networkState.isConnected);
     }
   });

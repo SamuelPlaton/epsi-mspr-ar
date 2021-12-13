@@ -3,6 +3,7 @@ import {
   Text, View, TextInput,
 } from 'react-native';
 import axios from 'axios';
+import Constants from 'expo-constants';
 import { genericStyles } from '../../../styles';
 import { Button } from '../../buttons';
 import { storeActiveUser } from '../../../store/UserManager';
@@ -19,7 +20,7 @@ const UserForm: FunctionComponent<Props> = ({ onClose }) => {
   const [usernameFocused, setUsernameFocused] = useState<boolean>(false);
   const [emailFocused, setEmailFocused] = useState<boolean>(false);
   const submit = () => {
-    axios.post('http://192.168.0.101:1337/api/user-datas', { data: { username, email } }).then((response) => {
+    axios.post(`${Constants.manifest.extra.cmsUrl}/api/user-datas`, { data: { username, email } }).then((response) => {
       // @ts-ignore
       console.log(response.data.data);
       storeActiveUser({ username, email }).then(() => onClose());
