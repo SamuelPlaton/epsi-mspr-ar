@@ -4,6 +4,7 @@ import {
   NavigationLayout, UserModal,
 } from '../../components';
 import { retrieveActiveUser, User } from '../../store/UserManager';
+import CameraComponent from '../../components/cameras/Camera';
 
 /**
  * Home Page.
@@ -18,15 +19,10 @@ const HomePage: FunctionComponent = () => {
   return (
     <NavigationLayout>
       <ScrollView>
-        <Text>
-          Hello
-          {' '}
-          {activeUser?.username}
-        </Text>
         <UserModal />
+        <CameraComponent />
       </ScrollView>
     </NavigationLayout>
-  );
+);
 };
-
 export default HomePage;
