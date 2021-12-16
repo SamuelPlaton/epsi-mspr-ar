@@ -27,9 +27,6 @@ const CameraComponent: FunctionComponent = () => {
 }
 
 const styles = StyleSheet.create({
-  buttonContainer: {},
-  button: {},
-  text: {},
   container: {
     flex: 1,
     backgroundColor: '#fff',
