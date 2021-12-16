@@ -16,7 +16,7 @@ const genericStyles = StyleSheet.create({
     marginRight: 'auto',
   },
   titleText: {
-    fontSize: 30,
+    fontSize: 20,
     marginBottom: 20,
     marginTop: 20,
     alignItems: 'center',
@@ -76,18 +76,19 @@ const genericStyles = StyleSheet.create({
     justifyContent: 'center',
   },
   input: {
-    width: '60%',
+    width: 250,
     fontSize: 20,
     height: 44,
     padding: 10,
-    borderWidth: 1,
-    borderColor: '#8CD3FF',
+    borderWidth: 2,
+    borderColor: 'black',
     marginVertical: 10,
+    marginBottom: 25,
   },
   label: {
-    width: '60%',
+    width: 250,
     fontSize: 15,
-    color: '#8CD3FF',
+    color: 'black',
   },
 });
 
