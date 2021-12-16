@@ -4,7 +4,7 @@ import { Camera } from 'expo-camera';
 
 const CameraComponent: FunctionComponent = () => {
   const [hasPermission, setHasPermission] = useState(null);
-  const [type, setType] = useState(Camera.Constants.Type.back);
+  const [type] = useState(Camera.Constants.Type.back);
 
   useEffect(() => {
     (async () => {
@@ -24,7 +24,7 @@ const CameraComponent: FunctionComponent = () => {
       <Camera style={StyleSheet.absoluteFillObject} type={type} />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -36,4 +36,4 @@ const styles = StyleSheet.create({
   },
 
 });
-export default  CameraComponent
+export default CameraComponent;

@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { ScrollView, Text } from 'react-native';
+import { ScrollView } from 'react-native';
 import {
   NavigationLayout, UserModal,
 } from '../../components';
@@ -12,7 +12,7 @@ import CameraComponent from '../../components/cameras/Camera';
  */
 const HomePage: FunctionComponent = () => {
   // retrieve active user
-  const [activeUser, setActiveUser] = useState<User | undefined>();
+  const [setActiveUser] = useState<User | undefined>();
   useEffect(() => {
     retrieveActiveUser(setActiveUser);
   }, []);
@@ -23,6 +23,6 @@ const HomePage: FunctionComponent = () => {
         <CameraComponent />
       </ScrollView>
     </NavigationLayout>
-);
+  );
 };
 export default HomePage;
