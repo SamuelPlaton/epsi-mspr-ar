@@ -13,7 +13,7 @@ const UserModal: FunctionComponent = () => {
   const { enableUserRegistration } = Constants.manifest.extra;
   // Open modal only if wifi is accessible and user registration is enabled
   NetInfo.addEventListener((networkState) => {
-    if (isOpen !== networkState.isConnected && !isFormSubmitted && enableUserRegistration) {
+    if (isOpen !== networkState.isConnected && !isFormSubmitted && enableUserRegistration === 'true') {
       setIsOpen(networkState.isConnected);
     }
   });

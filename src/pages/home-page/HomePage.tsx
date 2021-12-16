@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { ScrollView, Text } from 'react-native';
 import {
+  ArModel,
   NavigationLayout, UserModal,
 } from '../../components';
 import { retrieveActiveUser, User } from '../../store/UserManager';
@@ -15,9 +16,10 @@ const HomePage: FunctionComponent = () => {
   useEffect(() => {
     retrieveActiveUser(setActiveUser);
   }, []);
-  return (
+  /*return (
     <NavigationLayout>
       <ScrollView>
+        <ArModel />
         <Text>
           Hello
           {' '}
@@ -26,7 +28,8 @@ const HomePage: FunctionComponent = () => {
         <UserModal />
       </ScrollView>
     </NavigationLayout>
-  );
+  );*/
+  return <ArModel/>;
 };
 
 export default HomePage;
