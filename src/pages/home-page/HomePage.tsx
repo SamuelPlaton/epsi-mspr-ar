@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {
-  NavigationLayout, UserModal,Button,
+  NavigationLayout, UserModal, Button,
 } from '../../components';
 import { retrieveActiveUser, User } from '../../store/UserManager';
 
