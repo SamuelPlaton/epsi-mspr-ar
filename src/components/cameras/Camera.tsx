@@ -1,5 +1,7 @@
 import React, { useState, useEffect, FunctionComponent } from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import {
+  Dimensions, StyleSheet, Text, View,
+} from 'react-native';
 import { Camera } from 'expo-camera';
 
 const CameraComponent: FunctionComponent = () => {

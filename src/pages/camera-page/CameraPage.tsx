@@ -6,13 +6,11 @@ import { CameraLayout, Camera } from '../../components';
  * Camera Page.
  * @constructor
  */
-const CameraPage: FunctionComponent = () => {
-  return (
-    <CameraLayout>
-      <ScrollView>
-        <Camera />
-      </ScrollView>
-    </CameraLayout>
-  );
-};
+const CameraPage: FunctionComponent = () => (
+  <CameraLayout>
+    <ScrollView>
+      <Camera />
+    </ScrollView>
+  </CameraLayout>
+);
 export default CameraPage;

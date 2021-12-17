@@ -1,10 +1,10 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { ScrollView, Text, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import {
   NavigationLayout, UserModal,
 } from '../../components';
 import { retrieveActiveUser, User } from '../../store/UserManager';
-import { useNavigation } from '@react-navigation/native';
 
 /**
  * Home Page.

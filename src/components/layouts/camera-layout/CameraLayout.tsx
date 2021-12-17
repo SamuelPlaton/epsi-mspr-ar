@@ -4,7 +4,6 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Images } from '../../../images';
-import { genericStyles } from '../../../styles';
 
 /**
  * @name CameraLayout
@@ -19,8 +18,7 @@ const CameraLayout: FunctionComponent = ({ children }) => {
       paddingLeft: 30,
       paddingTop: 50,
       position: 'absolute',
-      zIndex:2,
-
+      zIndex: 2,
     },
     appLogo: {
       width: 40,
@@ -38,7 +36,7 @@ const CameraLayout: FunctionComponent = ({ children }) => {
 
   return (
     <View>
-      <View style={{ ...styles.header}}>
+      <View style={{ ...styles.header }}>
         <TouchableOpacity activeOpacity={1} onPress={() => navigate('Home')}>
           <Image source={Images.back} style={styles.appLogo} />
         </TouchableOpacity>
