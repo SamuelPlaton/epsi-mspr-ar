@@ -1,10 +1,10 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, Text, TouchableOpacity } from 'react-native';
 import {
   NavigationLayout, UserModal,
 } from '../../components';
 import { retrieveActiveUser, User } from '../../store/UserManager';
-import CameraComponent from '../../components/cameras/Camera';
+import { useNavigation } from '@react-navigation/native';
 
 /**
  * Home Page.
@@ -12,17 +12,32 @@ import CameraComponent from '../../components/cameras/Camera';
  */
 const HomePage: FunctionComponent = () => {
   // retrieve active user
-  const [setActiveUser] = useState<User | undefined>();
+  const [activeUser, setActiveUser] = useState<User | undefined>();
   useEffect(() => {
     retrieveActiveUser(setActiveUser);
   }, []);
+  const nav = useNavigation();
+  // Navigate user to a specified link
+  const navigate = (link: string) => {
+    nav.navigate(link);
+  };
   return (
     <NavigationLayout>
       <ScrollView>
+        <TouchableOpacity activeOpacity={1} onPress={() => navigate('Camera')}>
+          <Text>
+            Scan Me
+          </Text>
+        </TouchableOpacity>
+        <Text>
+          Hello
+          {' '}
+          {activeUser?.username}
+        </Text>
         <UserModal />
-        <CameraComponent />
       </ScrollView>
     </NavigationLayout>
   );
 };
+
 export default HomePage;

@@ -1,14 +1,13 @@
 import React, { useState, useEffect, FunctionComponent } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { Camera } from 'expo-camera';
 
 const CameraComponent: FunctionComponent = () => {
   const [hasPermission, setHasPermission] = useState(null);
-  const [type] = useState(Camera.Constants.Type.back);
 
   useEffect(() => {
     (async () => {
-      const { status } = await Camera.requestPermissionsAsync();
+      const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === 'granted');
     })();
   }, []);
@@ -21,19 +20,19 @@ const CameraComponent: FunctionComponent = () => {
   }
   return (
     <View style={styles.container}>
-      <Camera style={StyleSheet.absoluteFillObject} type={type} />
+      <Camera style={StyleSheet.absoluteFillObject} type={Camera.Constants.Type.back} />
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 1000,
+    width: '100%',
+    height: Dimensions.get('window').height,
   },
+  camera: {
+    flex: 1,
 
+  },
 });
 export default CameraComponent;
