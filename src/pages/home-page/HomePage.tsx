@@ -1,10 +1,8 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { ScrollView, Text } from 'react-native';
-import {
-  ArModel,
-  NavigationLayout, UserModal,
-} from '../../components';
+import { ArModel, NavigationLayout, UserModal } from '../../components';
 import { retrieveActiveUser, User } from '../../store/UserManager';
+import Models from '../../models/Models';
 
 /**
  * Home Page.
@@ -16,7 +14,9 @@ const HomePage: FunctionComponent = () => {
   useEffect(() => {
     retrieveActiveUser(setActiveUser);
   }, []);
-  /*return (
+  const img = require('../../models/demo.glb');
+  return <ArModel model={img} />;
+  /* return (
     <NavigationLayout>
       <ScrollView>
         <ArModel />
@@ -25,11 +25,11 @@ const HomePage: FunctionComponent = () => {
           {' '}
           {activeUser?.username}
         </Text>
+        <ArModel model={Models.demo} />
         <UserModal />
       </ScrollView>
     </NavigationLayout>
-  );*/
-  return <ArModel/>;
+  ); */
 };
 
 export default HomePage;
