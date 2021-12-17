@@ -1,10 +1,13 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { ScrollView, Text, TouchableOpacity } from 'react-native';
+import {
+  Dimensions, ScrollView, StyleSheet, Text, View,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {
   NavigationLayout, UserModal,
 } from '../../components';
 import { retrieveActiveUser, User } from '../../store/UserManager';
+import ButtonComponent from '../../components/buttons/Button';
 
 /**
  * Home Page.
@@ -24,20 +27,41 @@ const HomePage: FunctionComponent = () => {
   return (
     <NavigationLayout>
       <ScrollView>
-        <TouchableOpacity activeOpacity={1} onPress={() => navigate('Camera')}>
-          <Text>
-            Scan Me
-          </Text>
-        </TouchableOpacity>
-        <Text>
+        <Text style={styles.message}>
           Hello
           {' '}
-          {activeUser?.username}
+          <Text style={styles.user}>
+            {activeUser?.username}
+          </Text>
+          , ready to draw?
         </Text>
+        <View style={styles.button}>
+          <ButtonComponent onPress={() => navigate('Camera')} title="Scan your draw" />
+        </View>
         <UserModal />
       </ScrollView>
     </NavigationLayout>
   );
 };
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    width: '100%',
+    height: Dimensions.get('window').height,
+  },
+  user: {
+    color: '#FAB915',
+  },
+  message: {
+    marginTop: '10%',
+    alignSelf: 'center',
+  },
+  button: {
+    flex: 1,
+    marginTop: '40%',
+    justifyContent: 'center',
+    alignSelf: 'center',
 
+  },
+});
 export default HomePage;

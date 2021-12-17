@@ -13,7 +13,6 @@ const CameraComponent: FunctionComponent = () => {
       setHasPermission(status === 'granted');
     })();
   }, []);
-
   if (hasPermission === null) {
     return <View />;
   }
@@ -31,10 +30,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: Dimensions.get('window').height,
-  },
-  camera: {
-    flex: 1,
-
   },
 });
 export default CameraComponent;
