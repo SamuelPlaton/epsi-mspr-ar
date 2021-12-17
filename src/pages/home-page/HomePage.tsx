@@ -4,10 +4,9 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {
-  NavigationLayout, UserModal,
+  NavigationLayout, UserModal,Button,
 } from '../../components';
 import { retrieveActiveUser, User } from '../../store/UserManager';
-import ButtonComponent from '../../components/buttons/Button';
 
 /**
  * Home Page.
@@ -36,7 +35,7 @@ const HomePage: FunctionComponent = () => {
           , ready to draw?
         </Text>
         <View style={styles.button}>
-          <ButtonComponent onPress={() => navigate('Camera')} title="Scan your draw" />
+          <Button onPress={() => navigate('Camera')} title="Scan your draw" />
         </View>
         <UserModal />
       </ScrollView>
