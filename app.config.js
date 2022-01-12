@@ -7,4 +7,7 @@ export default {
     cmsUrl: process.env.CMS_URL,
     enableUserRegistration: process.env.ENABLE_USER_REGISTRATION,
   },
+  android: {
+    package: 'package.test',
+  },
 };
