@@ -3,7 +3,7 @@ import * as ImageManipulator from 'expo-image-manipulator';
 
 const { height: DEVICE_HEIGHT, width: DEVICE_WIDTH } = Dimensions.get('window');
 
-// got the dimension from the trained data of the *Teachable Machine*; pixel resolution conversion (8x)
+// dimension of teachable machine
 export const BITMAP_DIMENSION = 224;
 
 export const cropPicture = async (imageData, maskDimension) => {
@@ -35,6 +35,6 @@ export const cropPicture = async (imageData, maskDimension) => {
     return await ImageManipulator.manipulateAsync(uri, actions, saveOptions);
   } catch (error) {
     console.log('Could not crop & resize photo', error);
+    return error;
   }
-  return true;
 };

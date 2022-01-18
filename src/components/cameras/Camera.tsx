@@ -6,14 +6,13 @@ import {
   Dimensions, Modal, Pressable, StyleSheet, Text, View,
 } from 'react-native';
 import { Camera } from 'expo-camera';
-import * as MediaLibrary from 'expo-media-library';
 import * as Permissions from 'expo-permissions';
 import {
   getModel,
   convertBase64ToTensor,
   startPrediction,
-} from '../../tensor/tensorFlow';
-import { cropPicture } from '../../tensor/Image-tensorFlow';
+} from '../../tensor/TensorFlow';
+import { cropPicture } from '../../tensor/ImageTensorFlow';
 
 const RESULT_MAPPING = ['Snake', 'Monkey', 'Rhinoceros'];
 
@@ -25,7 +24,6 @@ const CameraComponent: FunctionComponent = () => {
   const [presentedShape, setPresentedShape] = useState('');
   const handleImageCapture = async () => {
     setIsProcessing(true);
-    // @ts-ignore
     const imageData = await camera.takePictureAsync();
 
     processImagePrediction(imageData);
@@ -33,7 +31,7 @@ const CameraComponent: FunctionComponent = () => {
 
   const processImagePrediction = async (base64Image) => {
     const croppedData = await cropPicture(base64Image, 300);
-    const asset = await MediaLibrary.createAssetAsync(croppedData.uri);
+    // const asset = await MediaLibrary.createAssetAsync(croppedData.uri);
     const model = await getModel();
     const tensor = await convertBase64ToTensor(croppedData.base64);
     const prediction = await startPrediction(model, tensor);

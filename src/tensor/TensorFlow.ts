@@ -50,5 +50,6 @@ export const startPrediction = async (model, tensor) => {
     return output.dataSync();
   } catch (error) {
     console.log('Error predicting from tesor image', error);
+    return error;
   }
 };
