@@ -55,7 +55,6 @@ export const Base64Binary = {
   decode(input, arrayBuffer) {
     // get last chars to see if are valid
     input = this.removePaddingChars(input);
-    input = this.removePaddingChars(input);
 
     const bytes = parseInt(String((input.length / 4) * 3), 10);
 

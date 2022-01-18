@@ -20,7 +20,7 @@ const RESULT_MAPPING = ['Snake', 'Monkey', 'Rhinoceros'];
 const CameraComponent: FunctionComponent = () => {
   let camera;
   const [hasPermission, setHasPermission] = useState(null);
-  const [rollPermision, setRollPermission] = useState(null);
+  const [setRollPermission] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [presentedShape, setPresentedShape] = useState('');
   const handleImageCapture = async () => {
@@ -37,8 +37,6 @@ const CameraComponent: FunctionComponent = () => {
     const model = await getModel();
     const tensor = await convertBase64ToTensor(croppedData.base64);
     const prediction = await startPrediction(model, tensor);
-    console.log('prediction 1:');
-    console.log(prediction);
     const highestPrediction = prediction.indexOf(
       Math.max.apply(null, prediction),
     );
@@ -55,8 +53,8 @@ const CameraComponent: FunctionComponent = () => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === 'granted');
-      const { cam_roll } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-      setRollPermission(cam_roll === 'granted');
+      const { camroll } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
+      setRollPermission(camroll === 'granted');
       setRollPermission(true);
     })();
   }, []);
