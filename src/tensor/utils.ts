@@ -63,7 +63,7 @@ export const Base64Binary = {
     let enc1; let enc2; let enc3; let
       enc4;
     let i = 0;
-    let j = 0;
+    const j = 0;
 
     if (arrayBuffer) {
       uarray = new Uint8Array(arrayBuffer);
@@ -75,10 +75,10 @@ export const Base64Binary = {
 
     for (i = 0; i < bytes; i += 3) {
       // get the 3 octects in 4 ascii chars
-      enc1 = this.keyStr.indexOf(input.charAt(j++));
-      enc2 = this.keyStr.indexOf(input.charAt(j++));
-      enc3 = this.keyStr.indexOf(input.charAt(j++));
-      enc4 = this.keyStr.indexOf(input.charAt(j++));
+      enc1 = this.keyStr.indexOf(input.charAt(j + 1));
+      enc2 = this.keyStr.indexOf(input.charAt(j + 1));
+      enc3 = this.keyStr.indexOf(input.charAt(j + 1));
+      enc4 = this.keyStr.indexOf(input.charAt(j + 1));
 
       chr1 = (enc1 << 2) | (enc2 >> 4);
       chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
