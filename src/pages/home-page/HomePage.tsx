@@ -1,9 +1,10 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { ScrollView, Text } from 'react-native';
+/*import { ScrollView, Text } from 'react-native';
 import {
   NavigationLayout, UserModal,
-} from '../../components';
+} from '../../components';*/
 import { retrieveActiveUser, User } from '../../store/UserManager';
+import ArModel from '../../ArModel';
 
 /**
  * Home Page.
@@ -15,7 +16,8 @@ const HomePage: FunctionComponent = () => {
   useEffect(() => {
     retrieveActiveUser(setActiveUser);
   }, []);
-  return (
+  return <ArModel />;
+  /*return (
     <NavigationLayout>
       <ScrollView>
         <Text>
@@ -26,7 +28,7 @@ const HomePage: FunctionComponent = () => {
         <UserModal />
       </ScrollView>
     </NavigationLayout>
-  );
+  );*/
 };
 
 export default HomePage;
