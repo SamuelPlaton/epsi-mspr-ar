@@ -17,7 +17,7 @@ import { cropPicture } from '../../tensor/ImageTensorFlow';
 const RESULT_MAPPING = ['Snake', 'Monkey', 'Rhinoceros'];
 
 const CameraComponent: FunctionComponent = () => {
-  let camera: Camera
+  let camera: Camera;
   const [hasPermission, setHasPermission] = useState(null);
   const [setRollPermission] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -82,7 +82,7 @@ const CameraComponent: FunctionComponent = () => {
         </View>
       </Modal>
       <Camera
-        ref={(ref) => {camera = ref}}
+        ref={ (ref) => {camera = ref;} }
         style={StyleSheet.absoluteFillObject}
         type={Camera.Constants.Type.back}
         autoFocus
