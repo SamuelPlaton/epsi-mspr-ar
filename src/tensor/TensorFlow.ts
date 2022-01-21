@@ -19,7 +19,6 @@ export const getModel = async () => {
     // load the trained model
     return await tf.loadLayersModel(bundleResourceIO(modelJson, modelWeights));
   } catch (error) {
-    console.log('Could not load model', error);
     return error;
   }
 };
@@ -38,7 +37,7 @@ export const convertBase64ToTensor = async (base64) => {
       TENSORFLOW_CHANNEL,
     ]);
   } catch (error) {
-    console.log('Could not convert base64 string to tesor', error);
+    return error;
   }
 };
 
@@ -49,7 +48,6 @@ export const startPrediction = async (model, tensor) => {
     // return typed array
     return output.dataSync();
   } catch (error) {
-    console.log('Error predicting from tesor image', error);
     return error;
   }
 };

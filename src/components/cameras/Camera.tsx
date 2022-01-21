@@ -17,7 +17,7 @@ import { cropPicture } from '../../tensor/ImageTensorFlow';
 const RESULT_MAPPING = ['Snake', 'Monkey', 'Rhinoceros'];
 
 const CameraComponent: FunctionComponent = () => {
-  let camera;
+  let camera: Camera
   const [hasPermission, setHasPermission] = useState(null);
   const [setRollPermission] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -40,12 +40,9 @@ const CameraComponent: FunctionComponent = () => {
     );
     if (prediction[highestPrediction] > 0.7) {
       setPresentedShape(RESULT_MAPPING[highestPrediction]);
-      console.log(' prob is:');
-      console.log(prediction[highestPrediction]);
-    } else {
-      console.log('not shure of image prob is:');
-      console.log(prediction[highestPrediction]);
     }
+    // view prediction result
+    console.log(prediction);
   };
   useEffect(() => {
     (async () => {
@@ -53,7 +50,6 @@ const CameraComponent: FunctionComponent = () => {
       setHasPermission(status === 'granted');
       const { camroll } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
       setRollPermission(camroll === 'granted');
-      setRollPermission(true);
     })();
   }, []);
   if (hasPermission === null) {
@@ -86,7 +82,7 @@ const CameraComponent: FunctionComponent = () => {
         </View>
       </Modal>
       <Camera
-        ref={(ref) => (camera = ref)}
+        ref={(ref) => {camera = ref}}
         style={StyleSheet.absoluteFillObject}
         type={Camera.Constants.Type.back}
         autoFocus

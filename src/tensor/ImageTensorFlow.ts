@@ -34,7 +34,6 @@ export const cropPicture = async (imageData, maskDimension) => {
     };
     return await ImageManipulator.manipulateAsync(uri, actions, saveOptions);
   } catch (error) {
-    console.log('Could not crop & resize photo', error);
     return error;
   }
 };
