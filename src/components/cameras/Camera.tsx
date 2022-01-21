@@ -82,7 +82,7 @@ const CameraComponent: FunctionComponent = () => {
         </View>
       </Modal>
       <Camera
-        ref={ (ref) => {camera = ref;} }
+        ref={(ref) => { camera = ref; }}
         style={StyleSheet.absoluteFillObject}
         type={Camera.Constants.Type.back}
         autoFocus
