@@ -21,7 +21,6 @@ const CameraComponent: FunctionComponent = () => {
   const [hasPermission, setHasPermission] = useState(null);
   const [setRollPermission] = useState(null);
   // handle ar model processing
-  const [isProcessing, setIsProcessing] = useState(false);
   const [presentedShape, setPresentedShape] = useState<ModelsEnum | null>(null);
 
   /**
@@ -29,7 +28,6 @@ const CameraComponent: FunctionComponent = () => {
    * @description When the button is selected, process the image
    */
   const handleImageCapture = async () => {
-    setIsProcessing(true);
     const imageData = await camera.takePictureAsync();
     processImagePrediction(imageData);
   };
