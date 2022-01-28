@@ -1,12 +1,8 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
-import {
-  Dimensions, ScrollView, StyleSheet, Text, View,
-} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import {
-  NavigationLayout, UserModal, Button,
-} from '../../components';
-import { retrieveActiveUser, User } from '../../store/UserManager';
+import React, {FunctionComponent, useEffect, useState} from 'react';
+import {Dimensions, ScrollView, StyleSheet, Text, View,} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {ArModel, Button, ModelsEnum, NavigationLayout, UserModal,} from '../../components';
+import {retrieveActiveUser, User} from '../../store/UserManager';
 
 /**
  * Home Page.
@@ -23,6 +19,7 @@ const HomePage: FunctionComponent = () => {
   const navigate = (link: string) => {
     nav.navigate(link);
   };
+  return <ArModel model={ModelsEnum.SNAKE} />;
   return (
     <NavigationLayout>
       <ScrollView>

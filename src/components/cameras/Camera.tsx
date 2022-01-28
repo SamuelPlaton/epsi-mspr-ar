@@ -1,40 +1,52 @@
-import React, {
-  useState, useEffect, FunctionComponent,
-} from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import {
-  ActivityIndicator,
   Dimensions, Modal, Pressable, StyleSheet, Text, View,
 } from 'react-native';
-import { Camera } from 'expo-camera';
+import { Camera, CameraCapturedPicture } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
-import {
-  getModel,
-  convertBase64ToTensor,
-  startPrediction,
-} from '../../tensor/TensorFlow';
+import { convertBase64ToTensor, getModel, startPrediction } from '../../tensor/TensorFlow';
 import { cropPicture } from '../../tensor/ImageTensorFlow';
+import { ArModel, ModelsEnum } from '../ar-model';
 
 const RESULT_MAPPING = ['Snake', 'Monkey', 'Rhinoceros'];
 
+/**
+ * @name CameraComponent
+ * @description Handle User camera and the ArModel display
+ * @constructor
+ */
 const CameraComponent: FunctionComponent = () => {
   let camera: Camera;
+  // handle camera permission
   const [hasPermission, setHasPermission] = useState(null);
   const [setRollPermission] = useState(null);
+  // handle ar model processing
   const [isProcessing, setIsProcessing] = useState(false);
-  const [presentedShape, setPresentedShape] = useState('');
+  const [presentedShape, setPresentedShape] = useState<ModelsEnum | null>(null);
+
+  /**
+   * @name handleImageCapture
+   * @description When the button is selected, process the image
+   */
   const handleImageCapture = async () => {
     setIsProcessing(true);
     const imageData = await camera.takePictureAsync();
-
     processImagePrediction(imageData);
   };
 
-  const processImagePrediction = async (base64Image) => {
+  /**
+   * @name processImagePrediction
+   * @description Handle image prediction
+   * @param {CameraCapturedPicture} base64Image The picture captured by the camera
+   */
+  const processImagePrediction = async (base64Image: CameraCapturedPicture) => {
     const croppedData = await cropPicture(base64Image, 300);
     // const asset = await MediaLibrary.createAssetAsync(croppedData.uri);
     const model = await getModel();
     const tensor = await convertBase64ToTensor(croppedData.base64);
     const prediction = await startPrediction(model, tensor);
+    console.log('CONSOLE');
+    console.log(prediction);
     const highestPrediction = prediction.indexOf(
       Math.max.apply(null, prediction),
     );
@@ -44,6 +56,8 @@ const CameraComponent: FunctionComponent = () => {
     // view prediction result
     console.log(prediction);
   };
+
+  // ask camera authorisation
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
@@ -52,6 +66,7 @@ const CameraComponent: FunctionComponent = () => {
       setRollPermission(camroll === 'granted');
     })();
   }, []);
+
   if (hasPermission === null) {
     return <View />;
   }
@@ -60,27 +75,11 @@ const CameraComponent: FunctionComponent = () => {
   }
   return (
     <View style={styles.container}>
-
-      <Modal visible={isProcessing} transparent animationType="slide">
-        <View style={styles.modal}>
-          <View style={styles.modalContent}>
-            <Text>
-              Your current shape is
-              {presentedShape}
-            </Text>
-            {presentedShape === '' && <ActivityIndicator size="large" />}
-            <Pressable
-              style={styles.dismissButton}
-              onPress={() => {
-                setPresentedShape('');
-                setIsProcessing(false);
-              }}
-            >
-              <Text>Dismiss</Text>
-            </Pressable>
-          </View>
-        </View>
+      {presentedShape && (
+      <Modal visible transparent>
+        <ArModel model={presentedShape} />
       </Modal>
+      )}
       <Camera
         ref={(ref) => { camera = ref; }}
         style={StyleSheet.absoluteFillObject}
@@ -111,31 +110,6 @@ const styles = StyleSheet.create({
     height: 100,
     backgroundColor: 'white',
     borderRadius: 50,
-  },
-  modal: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  modalContent: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 300,
-    height: 300,
-    borderRadius: 24,
-    backgroundColor: 'gray',
-  },
-  dismissButton: {
-    width: 150,
-    height: 50,
-    marginTop: 60,
-    borderRadius: 24,
-    color: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'red',
   },
 });
 export default CameraComponent;
