@@ -21,11 +21,11 @@ const UserForm: FunctionComponent<Props> = ({ onClose }) => {
   const [emailFocused, setEmailFocused] = useState<boolean>(false);
   const submit = () => {
     axios.post(`${Constants.manifest.extra.cmsUrl}/api/user-datas`, { data: { username, email } }).then((response) => {
-      // @ts-ignore
+      // eslint-disable-next-line no-console
       console.log(response.data.data);
       storeActiveUser({ username, email }).then(() => onClose());
       onClose();
-      // @ts-ignore
+      // eslint-disable-next-line no-console
     }).catch((e) => console.error(e));
   };
 

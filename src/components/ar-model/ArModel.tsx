@@ -5,6 +5,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import React, { FunctionComponent, useEffect } from 'react';
 import {
   AmbientLight,
+  Group,
   PerspectiveCamera,
   PointLight,
   Scene,
@@ -20,20 +21,20 @@ if (!global.atob) {
   global.atob = decode;
 }
 
-let currentModel: THREE.Group;
+let currentModel: Group;
 
-/**
- * @name ModelsEnum
- * @description The enum of the available models.
- */
+// eslint-disable-next-line no-shadow
 export enum ModelsEnum {
+  // eslint-disable-next-line no-unused-vars
   SNAKE = 'snake',
+  // eslint-disable-next-line no-unused-vars
   MONKEY = 'monkey',
+  // eslint-disable-next-line no-unused-vars
   RHINOCEROS = 'rhinoceros',
 }
 
 interface Props {
-  model: ModelsEnum
+  model: ModelsEnum,
 }
 
 /**
@@ -44,9 +45,9 @@ interface Props {
 const ArModel: FunctionComponent<Props> = ({ model }) => {
   let timeout: number;
   const models = {
-    snake: require('./v_knife_karam.gltf'),
+    snake: require('./models/v_knife_karam.gltf'),
     monkey: require('./models/v_knife_karam.gltf'),
-    rhinoceros: require('./v_knife_karam.gltf'),
+    rhinoceros: require('./models/v_knife_karam.gltf'),
   };
   useEffect(() => () => clearTimeout(timeout), []);
 
@@ -88,9 +89,11 @@ const ArModel: FunctionComponent<Props> = ({ model }) => {
             scene.add(currentModel);
           },
           (xhr) => {
+            // eslint-disable-next-line no-console
             console.log(`${(xhr.loaded / xhr.total) * 100}% loaded`);
           },
           (error) => {
+            // eslint-disable-next-line no-console
             console.error('An error happened', error);
           },
         );

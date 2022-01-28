@@ -18,8 +18,8 @@ const RESULT_MAPPING = ['Snake', 'Monkey', 'Rhinoceros'];
 const CameraComponent: FunctionComponent = () => {
   let camera: Camera;
   // handle camera permission
-  const [hasPermission, setHasPermission] = useState(null);
-  const [setRollPermission] = useState(null);
+  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
+  const [setRollPermission] = useState<boolean | null>(null);
   // handle ar model processing
   const [presentedShape, setPresentedShape] = useState<ModelsEnum | null>(null);
 
@@ -39,20 +39,17 @@ const CameraComponent: FunctionComponent = () => {
    */
   const processImagePrediction = async (base64Image: CameraCapturedPicture) => {
     const croppedData = await cropPicture(base64Image, 300);
-    // const asset = await MediaLibrary.createAssetAsync(croppedData.uri);
     const model = await getModel();
-    const tensor = await convertBase64ToTensor(croppedData.base64);
+    const tensor = convertBase64ToTensor(croppedData.base64);
+    // eslint-disable-next-line no-console
+    console.log('TENSOR : ', tensor); // TENSOR :  [Error: Expected image (JPEG, PNG, or GIF), but got unsupported image type]
     const prediction = await startPrediction(model, tensor);
-    console.log('CONSOLE');
-    console.log(prediction);
     const highestPrediction = prediction.indexOf(
       Math.max.apply(null, prediction),
     );
     if (prediction[highestPrediction] > 0.7) {
       setPresentedShape(RESULT_MAPPING[highestPrediction]);
     }
-    // view prediction result
-    console.log(prediction);
   };
 
   // ask camera authorisation
@@ -110,4 +107,5 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
 });
+
 export default CameraComponent;

@@ -1,12 +1,13 @@
 import { Dimensions } from 'react-native';
 import * as ImageManipulator from 'expo-image-manipulator';
+import {CameraCapturedPicture} from "expo-camera";
 
 const { height: DEVICE_HEIGHT, width: DEVICE_WIDTH } = Dimensions.get('window');
 
 // dimension of teachable machine
 export const BITMAP_DIMENSION = 224;
 
-export const cropPicture = async (imageData, maskDimension) => {
+export const cropPicture = async (imageData: CameraCapturedPicture, maskDimension: number): Promise<ImageManipulator.ImageResult> => {
   try {
     const { uri, width, height } = imageData;
     const cropWidth = maskDimension * (width / DEVICE_WIDTH);
