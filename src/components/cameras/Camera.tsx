@@ -17,7 +17,7 @@ const RESULT_MAPPING = ['Snake', 'Monkey', 'Rhinoceros'];
  * @description Handle User camera and the ArModel display
  * @constructor
  */
-const CameraComponent: FunctionComponent<any> = () => {
+const CameraComponent: FunctionComponent = () => {
   let camera: Camera;
   const nav = useNavigation();
   // handle camera permission

@@ -26,18 +26,16 @@ export const getModel = async (): Promise<LayersModel> => {
 
 export const convertBase64ToTensor = (base64: string): tf.Tensor<tf.Rank> => {
   try {
-    const uIntArray: Uint8Array = Base64Binary.decode(base64, null);
-    const like = new Uint8Array(uIntArray);
+    const uIntArray = Base64Binary.decode(base64, null);
     // decode a JPEG-encoded image to a 3D Tensor of dtype
-    const decodedImage = decodeJpeg(like, 3);
+    const decodedImage = decodeJpeg(uIntArray, 3);
     // reshape Tensor into a 4D array
-    const reshaped = decodedImage.reshape([
+    return decodedImage.reshape([
       1,
       BITMAP_DIMENSION,
       BITMAP_DIMENSION,
       TENSORFLOW_CHANNEL,
     ]);
-    return reshaped;
   } catch (error) {
     return error;
   }
