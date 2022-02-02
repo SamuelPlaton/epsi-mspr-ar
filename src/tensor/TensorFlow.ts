@@ -1,6 +1,7 @@
 import * as tf from '@tensorflow/tfjs';
 import { bundleResourceIO, decodeJpeg } from '@tensorflow/tfjs-react-native';
 import { Base64Binary } from './utils';
+import {LayersModel, Rank, Tensor} from "@tensorflow/tfjs";
 
 const BITMAP_DIMENSION = 224;
 
@@ -12,7 +13,7 @@ const modelWeights = require('../model/weights.bin');
 // 3: RGB image
 const TENSORFLOW_CHANNEL = 3;
 
-export const getModel = async () => {
+export const getModel = async (): Promise<LayersModel> => {
   try {
     // wait until tensorflow is ready
     await tf.ready();
@@ -23,8 +24,7 @@ export const getModel = async () => {
   }
 };
 
-// eslint-disable-next-line consistent-return
-export const convertBase64ToTensor = async (base64) => {
+export const convertBase64ToTensor = (base64: string): tf.Tensor<tf.Rank> => {
   try {
     const uIntArray = Base64Binary.decode(base64, null);
     // decode a JPEG-encoded image to a 3D Tensor of dtype
@@ -41,10 +41,10 @@ export const convertBase64ToTensor = async (base64) => {
   }
 };
 
-export const startPrediction = async (model, tensor) => {
+export const startPrediction = (model: LayersModel, tensor: Tensor<Rank>): Float32Array | Int32Array | Uint8Array => {
   try {
     // predict against the model
-    const output = await model.predict(tensor);
+    const output = model.predict(tensor) as Tensor<Rank>;
     // return typed array
     return output.dataSync();
   } catch (error) {

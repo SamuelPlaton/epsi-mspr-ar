@@ -4,21 +4,6 @@
  *
  * @format
  */
-/*
-module.exports = {
-  transformer: {
-    assetPlugins: ['expo-asset/tools/hashAssetFiles'],
-    getTransformOptions: async () => ({
-      transform: {
-        experimentalImportSupport: false,
-        inlineRequires: true,
-      },
-    }),
-  },
-  resolver: {
-    assetExts: [...assetExts, 'bin'],
-  },
-}; */
 
 const { getDefaultConfig } = require('metro-config');
 
@@ -37,7 +22,7 @@ module.exports = (async () => {
       }),
     },
     resolver: {
-      assetExts: [...assetExts, 'bin'],
+      assetExts: [...assetExts, 'bin', 'db', 'mp3', 'ttf', 'obj', 'png', 'jpg', 'glb', 'gltf'],
     },
   };
 })();

@@ -3,9 +3,7 @@ import {
   Dimensions, ScrollView, StyleSheet, Text, View,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import {
-  NavigationLayout, UserModal, Button,
-} from '../../components';
+import { Button, NavigationLayout, UserModal } from '../../components';
 import { retrieveActiveUser, User } from '../../store/UserManager';
 
 /**
@@ -23,6 +21,7 @@ const HomePage: FunctionComponent = () => {
   const navigate = (link: string) => {
     nav.navigate(link);
   };
+
   return (
     <NavigationLayout>
       <ScrollView>
