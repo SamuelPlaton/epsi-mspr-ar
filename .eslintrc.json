@@ -30,6 +30,7 @@
         "import/extensions": "off", // disable import extension
         "import/prefer-default-export": "off", // disable default import preference
         "import/no-unresolved": "off", // disable unresolved imports
-        "global-require": "off" // disable global require
+        "global-require": "off", // disable global require
+        "react/no-unescaped-entities": "off" // allow to use unescaped entites such as < ' >
     }
 }
