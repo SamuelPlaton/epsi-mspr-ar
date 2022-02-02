@@ -27,10 +27,12 @@ const HomePage: FunctionComponent = () => {
       <ScrollView>
         <Text style={styles.message}>
           Hello
-          {' '}
-          <Text style={styles.user}>
-            {activeUser?.username}
-          </Text>
+          {activeUser && (
+            <Text style={styles.user}>
+              {' '}
+              {activeUser?.username}
+            </Text>
+          )}
           , ready to draw?
         </Text>
         <View style={styles.button}>
@@ -51,8 +53,9 @@ const styles = StyleSheet.create({
     color: '#FAB915',
   },
   message: {
-    marginTop: '10%',
+    marginTop: '20%',
     alignSelf: 'center',
+    fontSize: 20,
   },
   button: {
     flex: 1,
