@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import {
-  Dimensions, ScrollView, StyleSheet, Text, View,
+  ScrollView, StyleSheet, Text, View,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Button, NavigationLayout, UserModal } from '../../components';
@@ -42,11 +42,6 @@ const HomePage: FunctionComponent = () => {
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: '100%',
-    height: Dimensions.get('window').height,
-  },
   user: {
     color: '#FAB915',
   },
