@@ -1,12 +1,14 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import {
-  Dimensions, Modal, Pressable, StyleSheet, Text, View,
+  Dimensions, Image, Modal, Pressable, StyleSheet, Text, View,
 } from 'react-native';
 import { Camera, CameraCapturedPicture } from 'expo-camera';
-import * as Permissions from 'expo-permissions';
+import { captureScreen } from 'react-native-view-shot';
+import { useNavigation } from '@react-navigation/native';
 import { convertBase64ToTensor, getModel, startPrediction } from '../../tensor/TensorFlow';
 import { cropPicture } from '../../tensor/ImageTensorFlow';
 import { ArModel, ModelsEnum } from '../ar-model';
+import { Images } from '../../images';
 
 const RESULT_MAPPING = ['Snake', 'Monkey', 'Rhinoceros'];
 
@@ -17,9 +19,9 @@ const RESULT_MAPPING = ['Snake', 'Monkey', 'Rhinoceros'];
  */
 const CameraComponent: FunctionComponent = () => {
   let camera: Camera;
+  const nav = useNavigation();
   // handle camera permission
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
-  const [setRollPermission] = useState<boolean | null>(null);
   // handle ar model processing
   const [presentedShape, setPresentedShape] = useState<ModelsEnum | null>(null);
 
@@ -29,7 +31,7 @@ const CameraComponent: FunctionComponent = () => {
    */
   const handleImageCapture = async () => {
     const imageData = await camera.takePictureAsync();
-    processImagePrediction(imageData);
+    await processImagePrediction(imageData);
   };
 
   /**
@@ -52,13 +54,20 @@ const CameraComponent: FunctionComponent = () => {
     }
   };
 
+  /**
+   * @name handleScreenCapture
+   * @description Take a screen of the app
+   */
+  const handleScreenCapture = async () => {
+    const screenUri: string = await captureScreen();
+    nav.navigate('Result', { screenUri });
+  };
+
   // ask camera authorisation
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === 'granted');
-      const { camroll } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
-      setRollPermission(camroll === 'granted');
     })();
   }, []);
 
@@ -82,10 +91,20 @@ const CameraComponent: FunctionComponent = () => {
         autoFocus
         whiteBalance={Camera.Constants.WhiteBalance.auto}
       />
-      <Pressable
-        onPress={() => handleImageCapture()}
-        style={styles.captureButton}
-      />
+      <View style={styles.actions}>
+        <Pressable
+          onPress={handleImageCapture}
+          style={styles.button}
+        >
+          <Image source={Images.qrScan} style={styles.buttonIcon} />
+        </Pressable>
+        <Pressable
+          onPress={handleScreenCapture}
+          style={styles.button}
+        >
+          <Image source={Images.camera} style={styles.buttonIcon} />
+        </Pressable>
+      </View>
     </View>
   );
 };
@@ -96,15 +115,31 @@ const styles = StyleSheet.create({
     width: '100%',
     height: Dimensions.get('window').height,
   },
-  captureButton: {
+  actions: {
     position: 'absolute',
-    left: Dimensions.get('screen').width / 2 - 50,
+    width: '100%',
     bottom: 40,
-    width: 100,
+    paddingLeft: 20,
+    paddingRight: 20,
     zIndex: 100,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  button: {
+    width: 100,
     height: 100,
-    backgroundColor: 'white',
-    borderRadius: 50,
+    backgroundColor: '#B298FB',
+    borderColor: 'white',
+    borderWidth: 4,
+    borderRadius: 10,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonIcon: {
+    width: '80%',
+    height: '80%',
   },
 });
 

@@ -1,7 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { CameraPage, HomePage, InfoPage } from '../pages';
+import {
+  CameraPage, HomePage, InfoPage, ResultPage,
+} from '../pages';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +18,7 @@ const Router: FunctionComponent = () => (
       <Stack.Screen name="Home" component={HomePage} options={{ headerShown: false }} />
       <Stack.Screen name="Info" component={InfoPage} options={{ headerShown: false }} />
       <Stack.Screen name="Camera" component={CameraPage} options={{ headerShown: false }} />
+      <Stack.Screen name="Result" component={ResultPage} options={{ headerShown: false }} />
     </Stack.Navigator>
   </NavigationContainer>
 );
