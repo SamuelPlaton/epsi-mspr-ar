@@ -43,15 +43,13 @@ interface Props {
  * @constructor
  */
 const ArModel: FunctionComponent<Props> = ({ model }) => {
-  console.log('AR MODEL');
-  console.log(model);
   let timeout: number;
   const models = {
     Snake: require('./models/v_knife_karam.gltf'),
     Monkey: require('./models/v_knife_karam.gltf'),
     Rhinoceros: require('./models/v_knife_karam.gltf'),
   };
-  console.log(models[model]);
+
   useEffect(() => () => clearTimeout(timeout), []);
 
   return (
