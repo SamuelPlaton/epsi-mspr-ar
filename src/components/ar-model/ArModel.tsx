@@ -43,17 +43,20 @@ interface Props {
  * @constructor
  */
 const ArModel: FunctionComponent<Props> = ({ model }) => {
+  console.log('AR MODEL');
+  console.log(model);
   let timeout: number;
   const models = {
-    snake: require('./models/v_knife_karam.gltf'),
-    monkey: require('./models/v_knife_karam.gltf'),
-    rhinoceros: require('./models/v_knife_karam.gltf'),
+    Snake: require('./models/v_knife_karam.gltf'),
+    Monkey: require('./models/v_knife_karam.gltf'),
+    Rhinoceros: require('./models/v_knife_karam.gltf'),
   };
+  console.log(models[model]);
   useEffect(() => () => clearTimeout(timeout), []);
 
   return (
     <GLView
-      style={{ flex: 1 }}
+      style={{ flex: 1, zIndex: 101 }}
       onContextCreate={async (gl: ExpoWebGLRenderingContext) => {
         const { drawingBufferWidth: width, drawingBufferHeight: height } = gl;
 
