@@ -10,10 +10,10 @@ const InfoPage: FunctionComponent = () => (
   <NavigationLayout>
     <ScrollView style={styles.container}>
       <Text style={styles.cgu}>
-        Les Conditions générales d'utilisations de
-        l'application sont disponibles sur le site de Cerealis.
+        The general conditions of use of
+        the application are available on the Cerealis website.
       </Text>
-      <Text>Pour toute demande, veuillez envoyer un mail à contact@cerealis.fr</Text>
+      <Text>For any request, please send an email to contact@cerealis.com</Text>
     </ScrollView>
   </NavigationLayout>
 );
