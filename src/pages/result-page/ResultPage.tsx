@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import {
-  Dimensions, Pressable, ScrollView, StyleSheet, Text, View, Image,
+  Dimensions, Pressable, ScrollView, StyleSheet, Text, View, Image, Alert,
 } from 'react-native';
 import * as MediaLibrary from 'expo-media-library';
 import { useNavigation } from '@react-navigation/native';
@@ -16,38 +16,23 @@ const ResultPage: FunctionComponent<any> = ({ route }) => {
   const { screenUri } = route.params;
   // retrieve active user
   const [activeUser, setActiveUser] = useState<User | undefined>();
-  const [hasRollPermission, setHasRollPermission] = useState<boolean>(false);
 
   useEffect(() => {
     retrieveActiveUser(setActiveUser);
-    (async () => {
-      //console.log('Ask for permission : ');
-      //const permissionResponse = await MediaLibrary.requestPermissionsAsync();
-      //const permissionResponse = await MediaLibrary.getPermissionsAsync();
-      //console.log('RESPONSE : ', permissionResponse);
-      setHasRollPermission(true);
-    })();
   }, []);
 
-  const perms = MediaLibrary.usePermissions();
-  console.log('PERMS : ', perms);
-
   const download = async () => {
-    console.log('DOWNLOAD : ', screenUri);
-    console.log(MediaLibrary.PermissionStatus);
     const asset = await MediaLibrary.createAssetAsync(screenUri);
     const album = await MediaLibrary.getAlbumAsync('draw-it');
-    console.log(asset);
     if (album) {
       await MediaLibrary.addAssetsToAlbumAsync([asset], album, false);
     } else {
       await MediaLibrary.createAlbumAsync('draw-it', asset, false);
     }
+    Alert.alert('Succès', 'Image téléchargée avec succès !');
   };
 
-  const share = () => {
-    console.log('SHARE');
-  };
+  const share = () => {};
 
   return (
     <NavigationLayout>
@@ -67,11 +52,9 @@ const ResultPage: FunctionComponent<any> = ({ route }) => {
           <Pressable onPress={() => nav.goBack()}>
             <Text style={styles.retryButton}>Take another one</Text>
           </Pressable>
-          {hasRollPermission && (
-            <View style={styles.button}>
-              <Button onPress={download} title="DOWNLOAD" />
-            </View>
-          )}
+          <View style={styles.button}>
+            <Button onPress={download} title="DOWNLOAD" />
+          </View>
           <View style={styles.button}>
             <Button onPress={share} title="SHARE" />
           </View>
