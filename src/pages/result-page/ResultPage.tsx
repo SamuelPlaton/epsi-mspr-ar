@@ -3,9 +3,9 @@ import {
   Dimensions, Pressable, ScrollView, StyleSheet, Text, View, Image,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Share from 'react-native-share';
 import { Button, NavigationLayout } from '../../components';
 import { retrieveActiveUser, User } from '../../store/UserManager';
-import Share from 'react-native-share';
 
 /**
  * Result Page.
