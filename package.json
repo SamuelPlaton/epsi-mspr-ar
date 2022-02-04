@@ -31,7 +31,7 @@
     "expo-gl": "~9.2.0",
     "expo-gl-cpp": "~9.2.0",
     "expo-image-manipulator": "^10.2.0",
-    "expo-media-library": "^14.0.0",
+    "expo-media-library": "^14.0.1",
     "expo-permissions": "^13.1.0",
     "expo-three": "^6.0.1",
     "husky": "^7.0.4",

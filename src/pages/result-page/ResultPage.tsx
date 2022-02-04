@@ -1,7 +1,8 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import {
-  Dimensions, Pressable, ScrollView, StyleSheet, Text, View, Image,
+  Dimensions, Pressable, ScrollView, StyleSheet, Text, View, Image, Alert,
 } from 'react-native';
+import * as MediaLibrary from 'expo-media-library';
 import { useNavigation } from '@react-navigation/native';
 import { Button, NavigationLayout } from '../../components';
 import { retrieveActiveUser, User } from '../../store/UserManager';
@@ -20,7 +21,17 @@ const ResultPage: FunctionComponent<any> = ({ route }) => {
     retrieveActiveUser(setActiveUser);
   }, []);
 
-  const download = () => {};
+  const download = async () => {
+    const asset = await MediaLibrary.createAssetAsync(screenUri);
+    const album = await MediaLibrary.getAlbumAsync('draw-it');
+    if (album) {
+      await MediaLibrary.addAssetsToAlbumAsync([asset], album, false);
+    } else {
+      await MediaLibrary.createAlbumAsync('draw-it', asset, false);
+    }
+    Alert.alert('Succès', 'Image téléchargée avec succès !');
+  };
+
   const share = () => {};
 
   return (
