@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import {
-  Dimensions, Pressable, ScrollView, StyleSheet, Text, View, Image,
+  Dimensions, Pressable, ScrollView, StyleSheet, Text, View, Image, Share,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Button, NavigationLayout } from '../../components';
@@ -21,8 +21,16 @@ const ResultPage: FunctionComponent<any> = ({ route }) => {
   }, []);
 
   const download = () => {};
-  const share = () => {};
-
+  const share = () => {
+    Share.share(shareOptions);
+  };
+  // const base64image = Buffer.from(screenUri).toString('base64');
+  const shareOptions = {
+    title: 'Dessin',
+    message: 'https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjEzNzYzNn0?utm_source=dictionnaire&utm_medium=referral',
+    subject: 'Subject',
+  };
+  console.log(shareOptions);
   return (
     <NavigationLayout>
       <ScrollView>
