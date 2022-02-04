@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import * as MediaLibrary from 'expo-media-library';
 import { useNavigation } from '@react-navigation/native';
+import * as Sharing from 'expo-sharing';
 import { Button, NavigationLayout } from '../../components';
 import { retrieveActiveUser, User } from '../../store/UserManager';
 
@@ -21,6 +22,10 @@ const ResultPage: FunctionComponent<any> = ({ route }) => {
     retrieveActiveUser(setActiveUser);
   }, []);
 
+  /**
+   * @name download
+   * @description Download the image and store it in media galery.
+   */
   const download = async () => {
     const asset = await MediaLibrary.createAssetAsync(screenUri);
     const album = await MediaLibrary.getAlbumAsync('draw-it');
@@ -32,7 +37,13 @@ const ResultPage: FunctionComponent<any> = ({ route }) => {
     Alert.alert('Succès', 'Image téléchargée avec succès !');
   };
 
-  const share = () => {};
+  /**
+   * @name share
+   * @description Share the image in the selected social media.
+   */
+  const share = async () => {
+    await Sharing.shareAsync(screenUri, { dialogTitle: 'Share your image' });
+  };
 
   return (
     <NavigationLayout>
