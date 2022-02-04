@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import {
-  Dimensions, Image, Pressable, StyleSheet, Text, View, Alert,
+  Dimensions, Image as ImageReact, Pressable, StyleSheet, Text, View, Alert,
 } from 'react-native';
 import { Camera, CameraCapturedPicture } from 'expo-camera';
 import { captureScreen } from 'react-native-view-shot';
@@ -119,13 +119,16 @@ const CameraComponent: FunctionComponent = () => {
           style={{ ...styles.button, backgroundColor: `${isScanning ? '#B1B1B1' : '#B298FB'}` }}
           disabled={isScanning}
         >
-          <Image source={isScanning ? Images.spinner : Images.qrScan} style={styles.buttonIcon} />
+          <ImageReact
+            source={isScanning ? Images.spinner : Images.qrScan}
+            style={styles.buttonIcon}
+          />
         </Pressable>
         <Pressable
           onPress={handleScreenCapture}
           style={styles.button}
         >
-          <Image source={Images.camera} style={styles.buttonIcon} />
+          <ImageReact source={Images.camera} style={styles.buttonIcon} />
         </Pressable>
       </View>
     </View>

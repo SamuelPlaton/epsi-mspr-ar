@@ -10,6 +10,8 @@ import {
   PointLight,
   Scene,
   SpotLight,
+  TextureLoader,
+  MeshBasicMaterial,
 } from 'three';
 import { Asset } from 'expo-asset';
 import { MonkeyZones, RhinoZones, SnakeZones } from '../canvas';
@@ -46,14 +48,11 @@ interface Props {
  * @constructor
  */
 const ArModel: FunctionComponent<Props> = ({ colors, model }) => {
-  // eslint-disable-next-line no-console
-  console.log('DETECTED COLORS : ', colors);
-
   let timeout: number;
   const models = {
     Snake: require('./models/v_knife_karam.gltf'),
-    Monkey: require('./models/v_knife_karam.gltf'),
-    Rhinoceros: require('./models/v_knife_karam.gltf'),
+    Monkey: require('./models/cube.glb'),
+    Rhinoceros: require('./models/rhino.glb'),
   };
 
   useEffect(() => () => clearTimeout(timeout), []);
@@ -70,6 +69,12 @@ const ArModel: FunctionComponent<Props> = ({ colors, model }) => {
         const camera = new PerspectiveCamera(120, width / height, 0.01, 1000);
         camera.position.z = 5;
         camera.position.y = 1.5;
+
+        // load texture and generate a material from it
+        const loadedTexture = new TextureLoader().load('./texture.png');
+        const material = new MeshBasicMaterial({ map: loadedTexture });
+        const basicMaterial = new MeshBasicMaterial({ color: '#E81111' });
+
         const asset = Asset.fromModule(
           models[model],
         );
@@ -89,10 +94,20 @@ const ArModel: FunctionComponent<Props> = ({ colors, model }) => {
         scene.add(spotLight);
 
         const loader = new GLTFLoader();
+
+        console.log('OUR MATERIAL : ', material);
+
         loader.load(
           asset.uri || '',
           (gltf) => {
             currentModel = gltf.scene;
+            currentModel.traverse((child) => {
+              console.log(child.name);
+              // if obj contains a material, update it texture
+              if (child.material) {
+                child.material = basicMaterial;
+              }
+            });
             scene.add(currentModel);
           },
           (xhr) => {
