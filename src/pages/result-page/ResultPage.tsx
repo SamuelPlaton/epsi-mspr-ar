@@ -1,10 +1,11 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import {
-  Dimensions, Pressable, ScrollView, StyleSheet, Text, View, Image, Share,
+  Dimensions, Pressable, ScrollView, StyleSheet, Text, View, Image,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Button, NavigationLayout } from '../../components';
 import { retrieveActiveUser, User } from '../../store/UserManager';
+import Share from 'react-native-share';
 
 /**
  * Result Page.
@@ -21,15 +22,19 @@ const ResultPage: FunctionComponent<any> = ({ route }) => {
   }, []);
 
   const download = () => {};
-  const share = () => {
-    Share.share(shareOptions);
+  const share = async () => {
+    console.log('TEST');
+    const result = await Share.open(shareOptions);
+    console.log('RESULT : ', result);
   };
-  // const base64image = Buffer.from(screenUri).toString('base64');
+  const base64image = Buffer.from(screenUri).toString('base64');
   const shareOptions = {
     title: 'Dessin',
-    message: 'https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjEzNzYzNn0?utm_source=dictionnaire&utm_medium=referral',
+    url: screenUri,
+    message: 'Hey !',
     subject: 'Subject',
   };
+
   console.log(shareOptions);
   return (
     <NavigationLayout>
