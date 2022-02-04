@@ -45,15 +45,16 @@ interface Props {
 const ArModel: FunctionComponent<Props> = ({ model }) => {
   let timeout: number;
   const models = {
-    snake: require('./models/v_knife_karam.gltf'),
-    monkey: require('./models/v_knife_karam.gltf'),
-    rhinoceros: require('./models/v_knife_karam.gltf'),
+    Snake: require('./models/v_knife_karam.gltf'),
+    Monkey: require('./models/v_knife_karam.gltf'),
+    Rhinoceros: require('./models/v_knife_karam.gltf'),
   };
+
   useEffect(() => () => clearTimeout(timeout), []);
 
   return (
     <GLView
-      style={{ flex: 1 }}
+      style={{ flex: 1, zIndex: 101 }}
       onContextCreate={async (gl: ExpoWebGLRenderingContext) => {
         const { drawingBufferWidth: width, drawingBufferHeight: height } = gl;
 

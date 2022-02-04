@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import {
-  Dimensions, Image, Modal, Pressable, StyleSheet, Text, View,
+  Dimensions, Image, Pressable, StyleSheet, Text, View, Alert,
 } from 'react-native';
 import { Camera, CameraCapturedPicture } from 'expo-camera';
 import { captureScreen } from 'react-native-view-shot';
@@ -22,6 +22,7 @@ const CameraComponent: FunctionComponent = () => {
   const nav = useNavigation();
   // handle camera permission
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
+  const [isScanning, setIsScanning] = useState<boolean>(false);
   // handle ar model processing
   const [presentedShape, setPresentedShape] = useState<ModelsEnum | null>(null);
 
@@ -30,6 +31,7 @@ const CameraComponent: FunctionComponent = () => {
    * @description When the button is selected, process the image
    */
   const handleImageCapture = async () => {
+    setIsScanning(true);
     const imageData = await camera.takePictureAsync();
     await processImagePrediction(imageData);
   };
@@ -43,15 +45,16 @@ const CameraComponent: FunctionComponent = () => {
     const croppedData = await cropPicture(base64Image, 300);
     const model = await getModel();
     const tensor = convertBase64ToTensor(croppedData.base64);
-    // eslint-disable-next-line no-console
-    console.log('TENSOR : ', tensor); // TENSOR :  [Error: Expected image (JPEG, PNG, or GIF), but got unsupported image type]
     const prediction = await startPrediction(model, tensor);
     const highestPrediction = prediction.indexOf(
       Math.max.apply(null, prediction),
     );
     if (prediction[highestPrediction] > 0.7) {
       setPresentedShape(RESULT_MAPPING[highestPrediction]);
+    } else {
+      Alert.alert('Error', 'No drawing found');
     }
+    setIsScanning(false);
   };
 
   /**
@@ -79,24 +82,23 @@ const CameraComponent: FunctionComponent = () => {
   }
   return (
     <View style={styles.container}>
-      {presentedShape && (
-      <Modal visible transparent>
-        <ArModel model={presentedShape} />
-      </Modal>
-      )}
       <Camera
         ref={(ref) => { camera = ref; }}
         style={StyleSheet.absoluteFillObject}
         type={Camera.Constants.Type.back}
         autoFocus
         whiteBalance={Camera.Constants.WhiteBalance.auto}
-      />
+      >
+        {presentedShape && (
+          <ArModel model={presentedShape} />
+        )}
+      </Camera>
       <View style={styles.actions}>
         <Pressable
           onPress={handleImageCapture}
           style={styles.button}
         >
-          <Image source={Images.qrScan} style={styles.buttonIcon} />
+          <Image source={isScanning ? Images.spinner : Images.qrScan} style={styles.buttonIcon} />
         </Pressable>
         <Pressable
           onPress={handleScreenCapture}
@@ -121,7 +123,7 @@ const styles = StyleSheet.create({
     bottom: 40,
     paddingLeft: 20,
     paddingRight: 20,
-    zIndex: 100,
+    zIndex: 102,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
