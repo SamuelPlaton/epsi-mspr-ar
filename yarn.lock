@@ -4247,6 +4247,11 @@ expo-permissions@^13.1.0:
   resolved "https://registry.yarnpkg.com/expo-permissions/-/expo-permissions-13.1.0.tgz#1be8fe01476950d642ea83d383fd8912492434b9"
   integrity sha512-f3ngERaoeAw8236xyvw4gS89Fxd4fU2soKXQn0JPXwiDGmIXO+lIJNH3psNvAebj4DfmyQtGW4AS1itG83GHaQ==
 
+expo-sharing@^10.1.1:
+  version "10.1.1"
+  resolved "https://registry.yarnpkg.com/expo-sharing/-/expo-sharing-10.1.1.tgz#80348768a2b0ab23860604c8902696d0c39ffea4"
+  integrity sha512-Wyre/y6Ce+S7PYwu1QGH2QNtO8ftHViiivSGAIif4shCO64QbO2JHYvgBzeMvAGfvUXzbJ04I+oCZKypA59tnA==
+
 expo-three@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/expo-three/-/expo-three-6.0.1.tgz#c79ca978e04830da065efb1f0bbd3db8d77ed3f3"
