@@ -9,6 +9,7 @@ import { convertBase64ToTensor, getModel, startPrediction } from '../../tensor/T
 import { cropPicture } from '../../tensor/ImageTensorFlow';
 import { ArModel, ModelsEnum } from '../ar-model';
 import { Images } from '../../images';
+import Context from "../../pages/camera-page/Context";
 
 const RESULT_MAPPING = ['Snake', 'Monkey', 'Rhinoceros'];
 
@@ -23,6 +24,8 @@ const CameraComponent: FunctionComponent = () => {
   // handle camera permission
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [isScanning, setIsScanning] = useState<boolean>(false);
+  // handle screenshot process
+  const [screenshot, setScreenshot] = useState<CameraCapturedPicture>();
   // handle ar model processing
   const [presentedShape, setPresentedShape] = useState<ModelsEnum | null>(null);
 
@@ -33,6 +36,7 @@ const CameraComponent: FunctionComponent = () => {
   const handleImageCapture = async () => {
     setIsScanning(true);
     const imageData = await camera.takePictureAsync();
+    setScreenshot(imageData);
     await processImagePrediction(imageData);
   };
 
@@ -80,8 +84,12 @@ const CameraComponent: FunctionComponent = () => {
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
+  if (screenshot) {
+    return <Context src={screenshot.uri} />;
+  }
   return (
     <View style={styles.container}>
+      { screenshot && <Context src={screenshot.uri} /> }
       <Camera
         ref={(ref) => { camera = ref; }}
         style={StyleSheet.absoluteFillObject}

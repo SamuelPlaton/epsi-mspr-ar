@@ -1,37 +1,46 @@
 import { GLView } from 'expo-gl';
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { FunctionComponent } from 'react';
 import Expo2DContext from 'expo-2d-context';
-import { Asset } from 'expo-asset';
+import {Asset, useAssets} from 'expo-asset';
 
-export default class Context extends React.Component {
-  render() {
-    return (
-      <GLView
-        style={{
-          flex: 1, width: 1000, height: 1000, zIndex: 200,
-        }}
-        onContextCreate={this._onGLContextCreate}
-      />
-    );
-  }
-
-  // example here : https://www.npmjs.com/package/expo-2d-context
-  _onGLContextCreate = async (gl) => {
-    const ctx = new Expo2DContext(gl);
-    const asset = Asset.fromModule(require('./dog.png'));
-    const dlAsset = await asset.downloadAsync();
-    const pattern = ctx.createPattern(dlAsset, 'repeat');
-    ctx.fillStyle = pattern;
-    ctx.fillRect(200, 200, 200, 300);
-    ctx.stroke();
-    ctx.flush();
-    const imgData = ctx.getImageData(200, 200, 1, 1);
-    console.log('PURPLE COLOR : ');
-    console.log(imgData.data);
-    const viewData = ctx.getImageData(100, 100, 1, 1);
-    console.log('RED COLOR : ');
-    console.log(viewData.data);
-    return gl;
-  };
+interface Props {
+  src: string;
 }
+
+// example here : https://www.npmjs.com/package/expo-2d-context
+const Context: FunctionComponent<Props> = ({ src }) => {
+  const onGLContextCreate = async (gl) => {
+    console.log('onGLContextCreate');
+    // Setup canva context
+    const ctx = new Expo2DContext(gl);
+    // Here example asset
+    const imageObj = new Image(gl.drawingBufferWidth, gl.drawingBufferHeight);
+    imageObj.onload = function() {
+      const pattern = ctx.createPattern(imageObj, 'no-repeat');
+      // display our pattern in the whole screen
+      ctx.fillStyle = pattern;
+      ctx.fillRect(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
+      ctx.stroke();
+      ctx.flush();
+      // retrieve pixel informations
+      const pixel200200 = ctx.getImageData(200, 200, 1, 1); // here RGB in pos 200:200
+      console.log('COLOR AT 200 200 : ');
+      console.log(pixel200200.data);
+      const pixel100100 = ctx.getImageData(100, 100, 1, 1); // here RGB in pos 100:100
+      console.log('COLOR AT 100 100 : ');
+      console.log(pixel100100.data);
+    };
+    imageObj.src = src;
+  };
+
+  return (
+    <GLView
+      style={{
+        flex: 1, width: 1000, height: 1000, zIndex: 200,
+      }}
+      onContextCreate={onGLContextCreate}
+    />
+  );
+};
+
+export default Context;
