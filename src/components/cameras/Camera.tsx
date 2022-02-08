@@ -96,7 +96,8 @@ const CameraComponent: FunctionComponent = () => {
       <View style={styles.actions}>
         <Pressable
           onPress={handleImageCapture}
-          style={styles.button}
+          style={{ ...styles.button, backgroundColor: `${isScanning ? '#B1B1B1' : '#B298FB'}` }}
+          disabled={isScanning}
         >
           <Image source={isScanning ? Images.spinner : Images.qrScan} style={styles.buttonIcon} />
         </Pressable>
