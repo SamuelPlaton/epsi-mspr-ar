@@ -12,6 +12,7 @@ import {
   SpotLight,
 } from 'three';
 import { Asset } from 'expo-asset';
+import { MonkeyZones, RhinoZones, SnakeZones } from '../canvas';
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -26,23 +27,28 @@ let currentModel: Group;
 // eslint-disable-next-line no-shadow
 export enum ModelsEnum {
   // eslint-disable-next-line no-unused-vars
-  SNAKE = 'snake',
+  SNAKE = 'Snake',
   // eslint-disable-next-line no-unused-vars
-  MONKEY = 'monkey',
+  MONKEY = 'Monkey',
   // eslint-disable-next-line no-unused-vars
-  RHINOCEROS = 'rhinoceros',
+  RHINOCEROS = 'Rhinoceros',
 }
 
 interface Props {
+  colors: RhinoZones | SnakeZones | MonkeyZones,
   model: ModelsEnum,
 }
 
 /**
  * @name ArModel
+ * @param {RhinoZones | SnakeZones | MonkeyZones} colors  The model colors.
  * @param {ModelsEnum} model  The model to display.
  * @constructor
  */
-const ArModel: FunctionComponent<Props> = ({ model }) => {
+const ArModel: FunctionComponent<Props> = ({ colors, model }) => {
+  // eslint-disable-next-line no-console
+  console.log('DETECTED COLORS : ', colors);
+
   let timeout: number;
   const models = {
     Snake: require('./models/v_knife_karam.gltf'),

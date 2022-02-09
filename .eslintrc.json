@@ -31,6 +31,7 @@
         "import/prefer-default-export": "off", // disable default import preference
         "import/no-unresolved": "off", // disable unresolved imports
         "global-require": "off", // disable global require
-        "react/no-unescaped-entities": "off" // allow to use unescaped entites such as < ' >
+        "react/no-unescaped-entities": "off", // allow to use unescaped entites such as < ' >
+        "no-unused-vars": "off" // allow unused vars
     }
 }
