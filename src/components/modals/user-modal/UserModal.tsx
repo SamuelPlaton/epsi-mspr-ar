@@ -3,11 +3,15 @@ import NetInfo from '@react-native-community/netinfo';
 import Constants from 'expo-constants';
 import { UserForm, Modal } from '../../../components';
 
+interface Props {
+  onSubmit: () => void;
+}
+
 /**
  * UserModal.
  * @constructor
  */
-const UserModal: FunctionComponent = () => {
+const UserModal: FunctionComponent<Props> = ({ onSubmit }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isFormSubmitted, setFormSubmitted] = useState<boolean>(false);
   const { enableUserRegistration } = Constants.manifest.extra;
@@ -21,6 +25,7 @@ const UserModal: FunctionComponent = () => {
   const handleClose = () => {
     setIsOpen(false);
     setFormSubmitted(true);
+    onSubmit();
   };
 
   return (
