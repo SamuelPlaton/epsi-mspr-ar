@@ -2,7 +2,6 @@ import React, { FunctionComponent } from 'react';
 import { ScrollView } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import { CameraLayout, Camera } from '../../components';
-
 /**
  * Camera Page.
  * @constructor

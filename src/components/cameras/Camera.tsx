@@ -5,10 +5,13 @@ import {
 import { Camera, CameraCapturedPicture } from 'expo-camera';
 import { captureScreen } from 'react-native-view-shot';
 import { useNavigation } from '@react-navigation/native';
+import { ImageResult } from 'expo-image-manipulator';
 import { convertBase64ToTensor, getModel, startPrediction } from '../../tensor/TensorFlow';
 import { cropPicture } from '../../tensor/ImageTensorFlow';
-import { ArModel, ModelsEnum } from '../ar-model';
 import { Images } from '../../images';
+import {
+  MonkeyZones, RhinoZones, SnakeZones, Canvas, ArModel, ModelsEnum,
+} from '../../components';
 
 const RESULT_MAPPING = ['Snake', 'Monkey', 'Rhinoceros'];
 
@@ -23,8 +26,12 @@ const CameraComponent: FunctionComponent = () => {
   // handle camera permission
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [isScanning, setIsScanning] = useState<boolean>(false);
+  // handle screenshot process
+  const [screenshot, setScreenshot] = useState<ImageResult>();
   // handle ar model processing
   const [presentedShape, setPresentedShape] = useState<ModelsEnum | null>(null);
+  // handle detected colors
+  const [detectedColors, setDetectedColors] = useState<RhinoZones | SnakeZones | MonkeyZones>();
 
   /**
    * @name handleImageCapture
@@ -33,6 +40,7 @@ const CameraComponent: FunctionComponent = () => {
   const handleImageCapture = async () => {
     setIsScanning(true);
     const imageData = await camera.takePictureAsync();
+    setScreenshot(imageData);
     await processImagePrediction(imageData);
   };
 
@@ -82,6 +90,13 @@ const CameraComponent: FunctionComponent = () => {
   }
   return (
     <View style={styles.container}>
+      { screenshot && presentedShape && (
+        <Canvas
+          src={screenshot.uri}
+          model={presentedShape}
+          onDetectedColors={(result) => setDetectedColors(result)}
+        />
+      )}
       <Camera
         ref={(ref) => { camera = ref; }}
         style={StyleSheet.absoluteFillObject}
@@ -89,10 +104,15 @@ const CameraComponent: FunctionComponent = () => {
         autoFocus
         whiteBalance={Camera.Constants.WhiteBalance.auto}
       >
-        {presentedShape && (
-          <ArModel model={presentedShape} />
+        {presentedShape && detectedColors && (
+          <ArModel model={presentedShape} colors={detectedColors} />
         )}
       </Camera>
+      {!presentedShape && !detectedColors && (
+        <View style={styles.scanZoneContainer}>
+          <View style={styles.scanZone} />
+        </View>
+      )}
       <View style={styles.actions}>
         <Pressable
           onPress={handleImageCapture}
@@ -117,6 +137,21 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: Dimensions.get('window').height,
+  },
+  scanZoneContainer: {
+    position: 'absolute',
+    display: 'flex',
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  scanZone: {
+    width: '50%',
+    height: 300,
+    borderWidth: 4,
+    borderRadius: 10,
+    borderColor: '#B298FB',
   },
   actions: {
     position: 'absolute',
