@@ -38,7 +38,7 @@ const HomePage: FunctionComponent = () => {
         <View style={styles.button}>
           <Button onPress={() => navigate('Camera')} title="Scan your draw" />
         </View>
-        <UserModal />
+        <UserModal onSubmit={() => retrieveActiveUser(setActiveUser)} />
       </ScrollView>
     </NavigationLayout>
   );
