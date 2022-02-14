@@ -10,6 +10,7 @@ const Images = {
   spinner: require('../assets/icons/spinner.gif'),
   back: require('../assets/icons/back-arrow.png'),
   qrScan: require('../assets/icons/qr-scan.png'),
+  reload: require('../assets/icons/reload.png'),
 };
 
 export default Images;

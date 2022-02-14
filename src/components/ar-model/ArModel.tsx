@@ -10,7 +10,6 @@ import {
   PointLight,
   Scene,
   SpotLight,
-  TextureLoader,
   MeshBasicMaterial,
 } from 'three';
 import { Asset } from 'expo-asset';
@@ -50,8 +49,8 @@ interface Props {
 const ArModel: FunctionComponent<Props> = ({ colors, model }) => {
   let timeout: number;
   const models = {
-    Snake: require('./models/v_knife_karam.gltf'),
-    Monkey: require('./models/cube.glb'),
+    Snake: require('./models/rhino.glb'),
+    Monkey: require('./models/rhino.glb'),
     Rhinoceros: require('./models/rhino.glb'),
   };
 
@@ -70,24 +69,18 @@ const ArModel: FunctionComponent<Props> = ({ colors, model }) => {
         camera.position.z = 5;
         camera.position.y = 1.5;
 
-        // load texture and generate a material from it
-        const loadedTexture = new TextureLoader().load('./texture.png');
-        const material = new MeshBasicMaterial({ map: loadedTexture });
-        const basicMaterial = new MeshBasicMaterial({ color: '#E81111' });
-
         const asset = Asset.fromModule(
           models[model],
         );
         await asset.downloadAsync();
         const scene = new Scene();
 
+        // lights
         const ambientLight = new AmbientLight(0x101010);
         scene.add(ambientLight);
-
         const pointLight = new PointLight(0xffffff, 2, 1000, 1);
         pointLight.position.set(0, 200, 200);
         scene.add(pointLight);
-
         const spotLight = new SpotLight(0xffffff, 0.5);
         spotLight.position.set(0, 500, 100);
         spotLight.lookAt(scene.position);
@@ -95,17 +88,23 @@ const ArModel: FunctionComponent<Props> = ({ colors, model }) => {
 
         const loader = new GLTFLoader();
 
-        console.log('OUR MATERIAL : ', material);
-
         loader.load(
           asset.uri || '',
           (gltf) => {
             currentModel = gltf.scene;
             currentModel.traverse((child) => {
-              console.log(child.name);
+              // find the zone of the child object 3d
+              const affiliatedZone = Object.keys(colors).find(
+                (colorZone) => colorZone === child.name,
+              );
               // if obj contains a material, update it texture
-              if (child.material) {
-                child.material = basicMaterial;
+              if (child.material && affiliatedZone) {
+                // setup detected color and affiliate it
+                const childMaterial = new MeshBasicMaterial({
+                  color: `rgb(${colors[child.name][0]},${colors[child.name][1]},${colors[child.name][2]})`,
+                });
+                // eslint-disable-next-line no-param-reassign
+                child.material = childMaterial;
               }
             });
             scene.add(currentModel);
@@ -120,8 +119,23 @@ const ArModel: FunctionComponent<Props> = ({ colors, model }) => {
           },
         );
 
+        let swipeDirection = 'left';
         function update() {
-          if (currentModel) currentModel.rotation.y += 0.004;
+          if (currentModel) {
+            if (swipeDirection === 'left') {
+              if (currentModel.rotation.y > 0.25) {
+                swipeDirection = 'right';
+              } else {
+                currentModel.rotation.y += 0.004;
+              }
+            } else if (swipeDirection === 'right') {
+              if (currentModel.rotation.y < -0.25) {
+                swipeDirection = 'left';
+              } else {
+                currentModel.rotation.y -= 0.004;
+              }
+            }
+          }
         }
 
         const render = () => {
