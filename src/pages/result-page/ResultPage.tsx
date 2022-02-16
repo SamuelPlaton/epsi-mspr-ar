@@ -5,7 +5,7 @@ import {
 import * as MediaLibrary from 'expo-media-library';
 import { useNavigation } from '@react-navigation/native';
 import * as Sharing from 'expo-sharing';
-import { Button, NavigationLayout } from '../../components';
+import { Button, NavigationLayout, UserModal } from '../../components';
 import { retrieveActiveUser, User } from '../../store/UserManager';
 
 /**
@@ -70,6 +70,7 @@ const ResultPage: FunctionComponent<any> = ({ route }) => {
             <Button onPress={share} title="SHARE" />
           </View>
         </View>
+        <UserModal onSubmit={() => retrieveActiveUser(setActiveUser)} />
       </ScrollView>
     </NavigationLayout>
   );
