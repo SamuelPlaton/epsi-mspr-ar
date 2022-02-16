@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import {
-  Dimensions, Image, Pressable, StyleSheet, Text, View, Alert,
+  Dimensions, Image as ImageReact, Pressable, StyleSheet, Text, View, Alert,
 } from 'react-native';
 import { Camera, CameraCapturedPicture } from 'expo-camera';
 import { captureScreen } from 'react-native-view-shot';
@@ -15,12 +15,17 @@ import {
 
 const RESULT_MAPPING = ['Snake', 'Monkey', 'Rhinoceros'];
 
+interface Props {
+  onRefresh: () => void;
+}
+
 /**
  * @name CameraComponent
- * @description Handle User camera and the ArModel display
+ * @description Handle User camera and the ArModel display.
+ * @param onRefresh Callback when the camera must be refreshed.
  * @constructor
  */
-const CameraComponent: FunctionComponent = () => {
+const CameraComponent: FunctionComponent<Props> = ({ onRefresh }) => {
   let camera: Camera;
   const nav = useNavigation();
   // handle camera permission
@@ -38,6 +43,10 @@ const CameraComponent: FunctionComponent = () => {
    * @description When the button is selected, process the image
    */
   const handleImageCapture = async () => {
+    if (presentedShape) {
+      onRefresh();
+      return;
+    }
     setIsScanning(true);
     const imageData = await camera.takePictureAsync();
     setScreenshot(imageData);
@@ -80,7 +89,7 @@ const CameraComponent: FunctionComponent = () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === 'granted');
     })();
-  }, []);
+  }, [presentedShape]);
 
   if (hasPermission === null) {
     return <View />;
@@ -88,6 +97,20 @@ const CameraComponent: FunctionComponent = () => {
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
+
+  /**
+   * @name handleScanningSource
+   * @description Handle which icon must be displayed on the scanning button.
+   */
+  const handleScanningSource = () => {
+    if (isScanning) {
+      return Images.spinner;
+    } if (presentedShape) {
+      return Images.reload;
+    }
+    return Images.qrScan;
+  };
+
   return (
     <View style={styles.container}>
       { screenshot && presentedShape && (
@@ -119,13 +142,16 @@ const CameraComponent: FunctionComponent = () => {
           style={{ ...styles.button, backgroundColor: `${isScanning ? '#B1B1B1' : '#B298FB'}` }}
           disabled={isScanning}
         >
-          <Image source={isScanning ? Images.spinner : Images.qrScan} style={styles.buttonIcon} />
+          <ImageReact
+            source={handleScanningSource()}
+            style={styles.buttonIcon}
+          />
         </Pressable>
         <Pressable
           onPress={handleScreenCapture}
           style={styles.button}
         >
-          <Image source={Images.camera} style={styles.buttonIcon} />
+          <ImageReact source={Images.camera} style={styles.buttonIcon} />
         </Pressable>
       </View>
     </View>
