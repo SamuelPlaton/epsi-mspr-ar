@@ -3,7 +3,7 @@ import {
   ScrollView, StyleSheet, Text, View,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Button, NavigationLayout, UserModal } from '../../components';
+import { Button, NavigationLayout } from '../../components';
 import { retrieveActiveUser, User } from '../../store/UserManager';
 
 /**
