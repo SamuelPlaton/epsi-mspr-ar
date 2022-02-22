@@ -17,11 +17,12 @@ const AlbumPage: FunctionComponent<any> = () => {
   useEffect(() => {
     getPics();
   }, []);
+  // eslint-disable-next-line consistent-return
   const getPics = async () => {
     try {
       const album = await MediaLibrary.getAlbumAsync('draw-it');
       MediaLibrary.getAssetsAsync({
-        album: album,
+        album,
       }).then((media) => {
         const array = [];
         media.assets.forEach((asset) => {
@@ -30,34 +31,34 @@ const AlbumPage: FunctionComponent<any> = () => {
         setImages(array);
       });
     } catch (error) {
+      return error;
     }
   };
   return (
     <NavigationLayout>
       <ScrollView>
         <View style={styles.container}>
-      {imagesUri.map((uriImg)=>{
-        return <Image source={{ uri: uriImg}} key={uriImg} style={styles.image} />
-      })}
+          {/* eslint-disable-next-line max-len */}
+          {imagesUri.map((uriImg) => <Image source={{ uri: uriImg }} key={uriImg} style={styles.image} />)}
         </View>
-        </ScrollView>
-        </NavigationLayout>
-        );
-      };
-  const styles = StyleSheet.create({
-    container: {
-      width: Dimensions.get('window').width,
-      height: Dimensions.get('window').height,
-      display: 'flex',
-      justifyContent: 'flex-start',
-      flexWrap:"wrap",
-      flexDirection:'row',
-      flex: 1,
-    },
-    image: {
-      width: Dimensions.get('window').width /4,
-      height: Dimensions.get('window').height/6,
-      display: 'flex',
-    },
-  });
-  export default AlbumPage;
+      </ScrollView>
+    </NavigationLayout>
+  );
+};
+const styles = StyleSheet.create({
+  container: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+    display: 'flex',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    flex: 1,
+  },
+  image: {
+    width: Dimensions.get('window').width / 4,
+    height: Dimensions.get('window').height / 6,
+    display: 'flex',
+  },
+});
+export default AlbumPage;
