@@ -3,15 +3,15 @@ import {
   Dimensions, Image, ScrollView, StyleSheet, View,
 } from 'react-native';
 import * as MediaLibrary from 'expo-media-library';
-import { NavigationLayout } from '../../components';
 import { useNavigation } from '@react-navigation/native';
+import { NavigationLayout } from '../../components';
 
 /**
  * Result Page.
  * @constructor
  */
-const AlbumPage: FunctionComponent<any> =  () => {
-  const [imagesUri, setImages] = useState( []);
+const AlbumPage: FunctionComponent<any> = () => {
+  const [imagesUri, setImages] = useState([]);
   const nav = useNavigation();
 
   useEffect(() => {
@@ -21,23 +21,24 @@ const AlbumPage: FunctionComponent<any> =  () => {
     try {
       const album = await MediaLibrary.getAlbumAsync('draw-it');
       MediaLibrary.getAssetsAsync({
-        album: album
+        album: album,
       }).then((media) => {
-        let array=[];
+        const array = [];
         media.assets.forEach((asset) => {
           array.push(asset.uri);
         });
         setImages(array);
       });
     } catch (error) {
-      console.log(error);
     }
   };
   return (
     <NavigationLayout>
       <ScrollView>
         <View style={styles.container}>
-      {imagesUri.map((uriImg)=>{return <Image source={{ uri: uriImg}} key={uriImg} style={styles.image} /> })}
+      {imagesUri.map((uriImg)=>{
+        return <Image source={{ uri: uriImg}} key={uriImg} style={styles.image} />
+      })}
         </View>
         </ScrollView>
         </NavigationLayout>

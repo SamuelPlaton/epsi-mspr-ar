@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import {
-  CameraPage, HomePage, InfoPage, ResultPage,AlbumPage
+  CameraPage, HomePage, InfoPage, ResultPage, AlbumPage,
 } from '../pages';
 
 const Stack = createNativeStackNavigator();
