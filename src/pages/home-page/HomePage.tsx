@@ -38,6 +38,9 @@ const HomePage: FunctionComponent = () => {
         <View style={styles.button}>
           <Button onPress={() => navigate('Camera')} title="Scan your draw" />
         </View>
+        <View style={styles.button}>
+          <Button onPress={() => navigate('Album')} title="View your older draw" />
+        </View>
         <UserModal />
       </ScrollView>
     </NavigationLayout>

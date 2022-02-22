@@ -26,6 +26,8 @@ const ResultPage: FunctionComponent<any> = ({ route }) => {
     const album = await MediaLibrary.getAlbumAsync('draw-it');
     if (album) {
       await MediaLibrary.addAssetsToAlbumAsync([asset], album, false);
+      const album = await MediaLibrary.getAlbumAsync('draw-it');
+      MediaLibrary.getAssetsAsync({ album: album });
     } else {
       await MediaLibrary.createAlbumAsync('draw-it', asset, false);
     }

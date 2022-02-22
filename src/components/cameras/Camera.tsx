@@ -49,6 +49,10 @@ const CameraComponent: FunctionComponent = () => {
     const highestPrediction = prediction.indexOf(
       Math.max.apply(null, prediction),
     );
+    console.log(RESULT_MAPPING[highestPrediction]);
+    console.log(prediction);
+    console.log(highestPrediction);
+
     if (prediction[highestPrediction] > 0.7) {
       setPresentedShape(RESULT_MAPPING[highestPrediction]);
     } else {
