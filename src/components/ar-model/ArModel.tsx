@@ -95,7 +95,6 @@ const ArModel: FunctionComponent<Props> = ({ colors, model }) => {
             currentModel.traverse((child) => {
               // find the zone of the child object 3d
               const affiliatedZone = Object.keys(colors).find(
-                // eslint-disable-next-line eqeqeq
                 (colorZone) => child.name.includes(colorZone),
               );
               // if obj contains a material, update it texture
