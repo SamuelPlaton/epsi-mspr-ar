@@ -50,7 +50,7 @@ const ArModel: FunctionComponent<Props> = ({ colors, model }) => {
   let timeout: number;
   const models = {
     Snake: require('./models/rhino.glb'),
-    Monkey: require('./models/rhino.glb'),
+    Monkey: require('./models/monkey.glb'),
     Rhinoceros: require('./models/rhino.glb'),
   };
 
@@ -65,9 +65,10 @@ const ArModel: FunctionComponent<Props> = ({ colors, model }) => {
         const renderer = new Renderer({ gl });
         renderer.setSize(width, height);
 
-        const camera = new PerspectiveCamera(120, width / height, 0.01, 1000);
-        camera.position.z = 5;
-        camera.position.y = 1.5;
+        const camera = new PerspectiveCamera(120, width / height, 0.1, 1000);
+        camera.position.z = 8;
+        camera.position.y = 7;
+        camera.position.x = -2;
 
         const asset = Asset.fromModule(
           models[model],
@@ -87,7 +88,6 @@ const ArModel: FunctionComponent<Props> = ({ colors, model }) => {
         scene.add(spotLight);
 
         const loader = new GLTFLoader();
-
         loader.load(
           asset.uri || '',
           (gltf) => {
@@ -95,13 +95,13 @@ const ArModel: FunctionComponent<Props> = ({ colors, model }) => {
             currentModel.traverse((child) => {
               // find the zone of the child object 3d
               const affiliatedZone = Object.keys(colors).find(
-                (colorZone) => colorZone === child.name,
+                (colorZone) => child.name.includes(colorZone),
               );
               // if obj contains a material, update it texture
-              if (child.material && affiliatedZone) {
+              if (affiliatedZone && child.material) {
                 // setup detected color and affiliate it
                 const childMaterial = new MeshBasicMaterial({
-                  color: `rgb(${colors[child.name][0]},${colors[child.name][1]},${colors[child.name][2]})`,
+                  color: `rgb(${colors[affiliatedZone][0]},${colors[affiliatedZone][1]},${colors[affiliatedZone][2]})`,
                 });
                 // eslint-disable-next-line no-param-reassign
                 child.material = childMaterial;
