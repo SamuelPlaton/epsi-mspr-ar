@@ -35,11 +35,11 @@ const HomePage: FunctionComponent = () => {
           )}
           , ready to draw?
         </Text>
-        <View style={styles.button}>
+        <View style={{ ...styles.button, marginTop: 60 }}>
           <Button onPress={() => navigate('Camera')} title="Scan your draw" />
         </View>
-        <View style={styles.button}>
-          <Button onPress={() => navigate('Album')} title="View your older draw" />
+        <View style={{ ...styles.button, marginTop: 20 }}>
+          <Button onPress={() => navigate('Album')} title="Your album" />
         </View>
       </ScrollView>
     </NavigationLayout>
@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
-    marginTop: '40%',
     justifyContent: 'center',
     alignSelf: 'center',
 

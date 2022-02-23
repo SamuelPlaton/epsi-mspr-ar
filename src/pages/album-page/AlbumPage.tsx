@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import {
-  Dimensions, Image, ScrollView, StyleSheet, View,
+  Dimensions, Image, Pressable, ScrollView, StyleSheet, View,
 } from 'react-native';
 import * as MediaLibrary from 'expo-media-library';
 import { useNavigation } from '@react-navigation/native';
@@ -38,8 +38,11 @@ const AlbumPage: FunctionComponent<any> = () => {
     <NavigationLayout>
       <ScrollView>
         <View style={styles.container}>
-          {/* eslint-disable-next-line max-len */}
-          {imagesUri.map((uriImg) => <Image source={{ uri: uriImg }} key={uriImg} style={styles.image} />)}
+          {imagesUri.map((uriImg) => (
+            <Pressable onPress={() => nav.navigate('Result', { screenUri: uriImg })}>
+              <Image source={{ uri: uriImg }} key={uriImg} style={styles.image} />
+            </Pressable>
+          ))}
         </View>
       </ScrollView>
     </NavigationLayout>
@@ -59,6 +62,7 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width / 4,
     height: Dimensions.get('window').height / 6,
     display: 'flex',
+    margin: 5,
   },
 });
 export default AlbumPage;
